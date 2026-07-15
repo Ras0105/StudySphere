@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Management Portal</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div id="container">
+
+        <!-- ===================== NAVBAR ===================== -->
+        <header id="nav-bar">
+            <nav>
+                <div id="nav-top">
+                    <a href="#home" id="logo">University Name</a>
+                    <button id="hamburger-icon" data-toggle="mobile-menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+
+                <div id="mobile-menu">
+                    <ul id="nav-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#courses">Courses</a></li>
+                        <li><a href="#announcements">Announcements</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+
+                    <div id="nav-actions">
+                        <a href="/register">Apply Now</a>
+                        <a href="/login">Login</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- ===================== HERO SECTION ===================== -->
+        <section id="hero">
+            <h1>Welcome To The University Management Portal</h1>
+            <p>Empowering students and faculty since 2000</p>
+            <a href="/login">Login to Portal</a>
+        </section>
+
+            {% if error %}
+                <div class="error-message">{{ error }}</div>
+            {% endif %}
+            {% if success %}
+                <div class="success-message show">{{ success }}</div>
+            {% endif %}
+            
+        <!-- ===================== STATS STRIP ===================== -->
+        <section id="stats">
+            <div class="stat-item">
+                <h2>500+</h2>
+                <p>Students</p>
+            </div>
+            <div class="stat-item">
+                <h2>50+</h2>
+                <p>Faculty</p>
+            </div>
+            <div class="stat-item">
+                <h2>20+</h2>
+                <p>Courses</p>
+            </div>
+            <div class="stat-item">
+                <h2>10+</h2>
+                <p>Departments</p>
+            </div>
+        </section>
+
+        <!-- ===================== COURSES PREVIEW ===================== -->
+        <section id="courses">
+            <h2>Our Programs</h2>
+
+            <div class="course-card">
+                <h3>Computer Science</h3>
+                <p>Short description of the course goes here.</p>
+            </div>
+
+            <div class="course-card">
+                <h3>Electronics Engineering</h3>
+                <p>Short description of the course goes here.</p>
+            </div>
+
+            <div class="course-card">
+                <h3>Business Administration</h3>
+                <p>Short description of the course goes here.</p>
+            </div>
+
+            <a href="#courses">View All Courses</a>
+        </section>
+
+        <!-- ===================== ANNOUNCEMENTS ===================== -->
+        <section id="announcements">
+            <h2>Latest Announcements</h2>
+
+            <div class="announcement-item">
+                <h3>Admission Open for 2026 Batch</h3>
+                <p>Details about admission dates and process.</p>
+            </div>
+
+            <div class="announcement-item">
+                <h3>Annual Sports Meet</h3>
+                <p>Details about the upcoming event.</p>
+            </div>
+
+            <div class="announcement-item">
+                <h3>Semester Exam Schedule Released</h3>
+                <p>Details about exam dates.</p>
+            </div>
+        </section>
+
+        <!-- ===================== ABOUT SECTION ===================== -->
+        <section id="about">
+            <h2>About Us</h2>
+            <p>Short paragraph about the university, its mission and vision.</p>
+
+            <div class="about-item">
+                <h3>Quality Education</h3>
+                <p>Description here.</p>
+            </div>
+
+            <div class="about-item">
+                <h3>Experienced Faculty</h3>
+                <p>Description here.</p>
+            </div>
+
+            <div class="about-item">
+                <h3>Modern Campus</h3>
+                <p>Description here.</p>
+            </div>
+        </section>
+
+        <!-- ===================== CONTACT / FOOTER ===================== -->
+        <footer id="contact">
+            <div id="footer-contact-info">
+                <h3>Contact Us</h3>
+                <p>Address line here</p>
+                <p>Phone: +91 00000 00000</p>
+                <p>Email: info@university.edu</p>
+            </div>
+
+            <div id="footer-quick-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#login">Login</a></li>
+                    <li><a href="#registration">Admissions</a></li>
+                    <li><a href="#courses">Departments</a></li>
+                </ul>
+            </div>
+
+            <div id="footer-social">
+                <h3>Follow Us</h3>
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">LinkedIn</a>
+            </div>
+
+            <p id="copyright">&copy; 2026 University Name. All rights reserved.</p>
+        </footer>
+
+    </div>
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

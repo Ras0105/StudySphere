@@ -1,0 +1,271 @@
+#teacher-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ============ SIDEBAR ============ */
+#sidebar {
+    width: 240px;
+    background-color: #003366;
+    color: #ffffff;
+    padding: 20px 0;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+#sidebar-logo {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+    padding: 0 20px 20px 20px;
+    border-bottom: 1px solid #0059b3;
+    margin-bottom: 15px;
+}
+
+#sidebar-links {
+    list-style: none;
+}
+
+#sidebar-links a {
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px 20px;
+    font-size: 15px;
+}
+
+#sidebar-links a:hover {
+    background-color: #0059b3;
+}
+
+#sidebar-logout {
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px 20px;
+    margin-top: 20px;
+    border-top: 1px solid #0059b3;
+    font-size: 15px;
+}
+
+#sidebar-logout:hover {
+    background-color: #b30000;
+}
+
+/* ============ MAIN CONTENT AREA ============ */
+#main-content {
+    flex-grow: 1;
+    background-color: #f2f2f2;
+}
+
+/* Top bar - page title + profile */
+#topbar {
+    background-color: #ffffff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #dddddd;
+
+    /* scroll pe bhi top pe chipka rahega */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+#topbar h1 {
+    font-size: 20px;
+    color: #003366;
+}
+
+/* Har teacher section ka common spacing */
+.teacher-section {
+    padding: 30px;
+    scroll-margin-top: 70px;
+}
+
+.teacher-section h2 {
+    color: #003366;
+    margin-bottom: 20px;
+}
+
+/* Simple reusable card */
+.teacher-card {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+/* Dashboard ke stat boxes ek row mein */
+#dashboard-stats {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+#dashboard-stats .teacher-card {
+    flex: 1;
+    min-width: 150px;
+    text-align: center;
+}
+
+#dashboard-stats h3 {
+    font-size: 26px;
+    color: #003366;
+}
+
+/* ============ CLASS LIST (My Classes section) ============ */
+.class-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.class-item:last-child {
+    border-bottom: none;
+}
+
+.class-item h4 {
+    color: #003366;
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.class-item p {
+    font-size: 13px;
+    color: #666666;
+}
+
+.class-item a {
+    color: #0059b3;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* ============ STATUS BADGES (assignments/leave) ============ */
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status-badge.pending {
+    background-color: #fff3e0;
+    color: #f57c00;
+}
+
+.status-badge.approved {
+    background-color: #e6f4ea;
+    color: #1e7e34;
+}
+
+.status-badge.rejected {
+    background-color: #fdecea;
+    color: #d32f2f;
+}
+
+/* ============ TOAST (page-specific instance) ============
+   Ye ek chhota notification box hai jo update
+   hone ke baad dikhta hai. teacher.js "show" class
+   add/remove karta hai. */
+#toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #003366;
+    color: #ffffff;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+}
+
+#toast.show {
+    display: block;
+}
+
+/* Hamburger button - desktop pe hidden,
+   sirf mobile pe dikhega */
+#menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #003366;
+}
+
+/* Basic responsive - chhoti screen pe sidebar
+   overlay ki tarah khulega, content ko push nahi karega */
+@media (max-width: 768px) {
+    #teacher-wrapper {
+        flex-direction: column;
+    }
+
+    /* Sidebar default mein hidden, mobile pe.
+       "position: fixed" isliye - taaki sidebar content ke
+       UPAR overlay ki tarah khule, use neeche push na kare
+       (admin.css/student.css mein bhi yahi fix hai). */
+    #sidebar {
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: none;
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    /* script.js jab "show" class dega, tab dikhega */
+    #sidebar.show {
+        display: block;
+    }
+
+    /* Sidebar ke peeche baaki page ko dim/blur karne wala
+       backdrop (admin.css/student.css jaisa hi - HTML mein
+       backdrop, sidebar ke BAAD aata hai isliye general
+       sibling selector se kaam chalta hai) */
+    #sidebar-backdrop {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(2px);
+        z-index: 999;
+    }
+
+    #sidebar.show ~ #sidebar-backdrop {
+        display: block;
+    }
+
+    #menu-toggle {
+        display: block;
+    }
+
+    #dashboard-stats {
+        flex-direction: column;
+    }
+
+    .class-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - University Management Portal</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <div id="auth-page">
+        <div id="auth-card">
+
+            <a href="/" id="auth-logo">University Name</a>
+            <h1>Welcome Back</h1>
+            <p id="auth-subtext">Login to access your dashboard</p>
+
+            <div id="loginSuccessMessage" class="success-message"></div>
+            {% if error %}
+                <div class="error-message">{{ error }}</div>
+            {% endif %}
+            {% if success %}
+                <div class="success-message show">{{ success }}</div>
+            {% endif %}
+            {% if existing_user %}
+            <div class="session-banner">
+            You're already logged in as {{ existing_user.email }}.
+            <a href="/already-login">Continue to Dashboard</a>
+            — or fill the form below to register a new account.
+            </div>
+            {% endif %}
+            <form action="/login" method="POST" id="loginForm">
+
+                <!-- Email Address Group -->
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-envelope input-icon"></i>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="name@university.edu"
+                            required>
+                    </div>
+                </div>
+
+                <!-- Password Guard Group -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="••••••••"
+                            required>
+                        <i class="fa-solid fa-eye toggle-password" id="passwordToggle"></i>
+                    </div>
+                </div>
+
+                <!-- Operational Submit Dispatcher -->
+                <button type="submit" class="submit-btn">
+                    Sign In <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                </button>
+
+                <p id="auth-footer-link">
+                    Don't have an account? <a href="/register">Register</a>
+                </p>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/js/login.js"></script>
+</body>
+</html>

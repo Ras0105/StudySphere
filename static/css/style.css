@@ -1,0 +1,836 @@
+/* Reset - browser ki default spacing hata di */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body ka basic look */
+body {
+    font-family: Arial, sans-serif;
+    color: #333333;
+    background-color: #ffffff;
+}
+
+/* Sticky navbar ke wajah se anchor click pe section
+   navbar ke peeche chhup jaata tha - isse gap milta hai */
+section, footer {
+    scroll-margin-top: 50px;
+}
+
+/* ============ NAVBAR ============ */
+#nav-bar {
+    background-color: #003366;
+    padding: 15px 30px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+#nav-bar nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#logo {
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+#nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+#nav-links a:hover {
+    text-decoration: underline;
+}
+
+#nav-actions a {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #0059b3;
+    padding: 8px 15px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+#mobile-menu {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* ============ HERO SECTION ============ */
+#hero {
+    background-color: #e6f0ff;
+    text-align: center;
+    padding: 60px 20px;
+}
+
+#hero h1 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+#hero p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+#hero a {
+    display: inline-block;
+    background-color: #003366;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+}
+
+/* ============ STATS STRIP ============ */
+#stats {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #f2f2f2;
+}
+
+.stat-item h2 {
+    font-size: 28px;
+    color: #003366;
+}
+
+/* ============ SECTION HEADINGS ============ */
+#courses, #announcements, #about {
+    padding: 50px 30px;
+}
+
+#courses h2, #announcements h2, #about h2 {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 30px;
+    color: #003366;
+}
+
+/* ============ CARDS ============ */
+.course-card, .announcement-item, .about-item {
+    background-color: #f9f9f9;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.course-card h3, .announcement-item h3, .about-item h3 {
+    color: #003366;
+    margin-bottom: 10px;
+}
+
+#courses > a {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #003366;
+    font-weight: bold;
+}
+
+/* ============ FOOTER ============ */
+#contact {
+    background-color: #003366;
+    color: #ffffff;
+    padding: 40px 30px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+#contact h3 {
+    margin-bottom: 10px;
+}
+
+#contact a {
+    color: #ffffff;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 5px;
+}
+
+#footer-quick-links ul {
+    list-style: none;
+}
+
+#copyright {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+/* ============ HAMBURGER ICON ============ */
+#hamburger-icon {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#hamburger-icon span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 2px;
+}
+
+/* ============ Message ============ */
+.error-message {
+    background-color: #fdecea;
+    color: #d32f2f;
+    border: 1px solid #f5c6cb;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.success-message {
+    background-color: #bfffb9;
+    color: #00971e;
+    border: 1px solid #005e0d;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+#password-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #003366;
+    color: #ffffff;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+}
+#password-toast.show {
+    display: block;
+}
+
+/* ============ Session Banner (existing login notice on /register) ============ */
+.session-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    background-color: #e6f0ff;
+    color: #003366;
+    border: 1px solid #b3d1ff;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    font-size: 14px;
+}
+
+.session-banner a {
+    color: #ffffff;
+    background-color: #003366;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 5px;
+    white-space: nowrap;
+}
+
+.session-banner a:hover {
+    background-color: #0059b3;
+}
+
+/* ============ RESPONSIVE (MOBILE) ============ */
+@media (max-width: 768px) {
+    #nav-bar nav {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #nav-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #hamburger-icon {
+        display: flex;
+    }
+
+    #mobile-menu {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+        padding: 20px 0 20px 0;
+
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #003366;
+        max-height: calc(100vh - 60px);
+        overflow-y: auto;
+    }
+
+    #mobile-menu.show {
+        display: flex;
+    }
+
+    #nav-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+    }
+
+    #nav-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    #nav-actions a {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    section, footer {
+        scroll-margin-top: 70px;
+    }
+
+    #hero h1 {
+        font-size: 24px;
+    }
+
+    #hero p {
+        font-size: 16px;
+    }
+
+    #stats {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    #contact {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #contact a {
+        text-align: center;
+    }
+}
+
+/* ============================================
+   NOTE FOR FUTURE PAGES (student.html, teacher.html):
+   The sidebar/topbar/toast/menu-toggle layout used by
+   admin.html lives entirely in admin.css. Link admin.css
+   on those pages too instead of copy-pasting the rules
+   again here - keeps one source of truth and avoids two
+   different CSS files fighting over the same #sidebar,
+   #topbar, #toast IDs.
+============================================ */
+
+/* ============================================
+   TOPBAR ICONS + PROFILE DROPDOWN (shared)
+============================================ */
+#topbar-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+
+.icon-btn {
+    position: relative;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #dddddd;
+    background-color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.icon-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background-color: #d32f2f;
+    color: #ffffff;
+    font-size: 10px;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#avatar-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: #003366;
+    color: #ffffff;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#avatar-btn {
+    padding: 0;
+    overflow: hidden;
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#profile-dropdown {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    min-width: 180px;
+    padding: 8px 0;
+}
+
+#profile-dropdown.show {
+    display: flex;
+}
+
+#profile-dropdown a {
+    padding: 10px 16px;
+    color: #333333;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+#profile-dropdown a:hover {
+    background-color: #f2f2f2;
+}
+
+#profile-dropdown a.danger {
+    color: #d32f2f;
+}
+
+/* ============================================
+   PROFILE MODAL (shared: admin/teacher/student)
+   Reuses the same data-toggle + .show system as
+   #profile-dropdown and #sidebar - script.js already
+   knows how to open/close it, close on outside click,
+   and close on Escape. No new JS machinery needed for
+   that part.
+============================================ */
+#profile-modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1999;
+}
+
+#profile-modal-backdrop.show {
+    display: block;
+}
+
+#profile-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 420px;
+    max-height: 85vh;
+    overflow-y: auto;
+    z-index: 2000;
+}
+
+#profile-modal.show {
+    display: block;
+}
+
+#profile-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+#profile-modal-header h2 {
+    font-size: 18px;
+    color: #003366;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: #666666;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: #003366;
+}
+
+#profile-modal-form {
+    padding: 24px;
+}
+
+#modal-photo-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+#modal-photo-wrapper {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    margin-bottom: 12px;
+}
+
+#modal-photo-preview {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #003366;
+}
+
+#modal-photo-upload-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #003366;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    cursor: pointer;
+    border: 2px solid #ffffff;
+}
+
+#modal-photo-group h3 {
+    font-size: 16px;
+    color: #003366;
+}
+
+#modal-photo-group p {
+    font-size: 13px;
+    color: #666666;
+}
+
+#profile-modal-form .form-group {
+    margin-bottom: 16px;
+}
+
+#profile-modal-form label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    color: #003366;
+    margin-bottom: 6px;
+}
+
+#profile-modal-form input[type="text"],
+#profile-modal-form input[type="email"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #dddddd;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    color: #333333;
+}
+
+#profile-modal-form input:focus {
+    outline: none;
+    border-color: #0059b3;
+}
+
+.profile-modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.profile-modal-actions .btn-save {
+    flex: 1;
+    background-color: #003366;
+    color: #ffffff;
+    border: none;
+    padding: 11px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.profile-modal-actions .btn-save:hover {
+    background-color: #0059b3;
+}
+
+.profile-modal-actions .btn-cancel {
+    flex: 1;
+    background-color: #ffffff;
+    color: #333333;
+    border: 1px solid #dddddd;
+    padding: 11px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.profile-modal-actions .btn-cancel:hover {
+    background-color: #f2f2f2;
+}
+
+/* ============================================
+   OTP MODAL + RESET PASSWORD MODAL
+   (shared: admin/teacher/student)
+   Two-step "Change Password" flow:
+   Step 1 - #otp-modal: send + verify OTP (AJAX, no page reload)
+   Step 2 - #reset-password-modal: new password + confirm (real form submit)
+   Both reuse the same data-toggle + .show system as
+   #profile-dropdown / #profile-modal / #sidebar.
+============================================ */
+#otp-modal-backdrop,
+#reset-password-modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1999;
+}
+
+#otp-modal-backdrop.show,
+#reset-password-modal-backdrop.show {
+    display: block;
+}
+
+#otp-modal,
+#reset-password-modal {
+    display: none;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    background-color: #ffffff;
+    border-radius: 10px;
+    width: 90% !important;
+    max-width: 420px !important;
+    max-height: 85vh;
+    overflow-y: auto;
+    z-index: 2000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+#otp-modal.show,
+#reset-password-modal.show {
+    display: block;
+}
+
+#otp-modal-header,
+#reset-password-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+#otp-modal-header h2,
+#reset-password-modal-header h2 {
+    font-size: 18px;
+    color: #003366;
+    margin: 0;
+}
+
+#otp-modal-form,
+#reset-password-modal-form {
+    padding: 24px;
+}
+
+#otp-modal-form .form-group,
+#reset-password-modal-form .form-group {
+    margin-bottom: 16px;
+}
+
+#otp-modal-form label,
+#reset-password-modal-form label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    color: #003366;
+    margin-bottom: 6px;
+}
+
+#otp-modal-form input[type="text"],
+#reset-password-modal-form input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #dddddd;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    color: #333333;
+    box-sizing: border-box;
+}
+
+#otp-modal-form input:focus,
+#reset-password-modal-form input:focus {
+    outline: none;
+    border-color: #0059b3;
+}
+
+/* "Send OTP to Email" - secondary/outline style button,
+   sits above the OTP input, separate from the primary actions row */
+#otp-send-btn {
+    background-color: #ffffff;
+    color: #003366;
+    border: 1px solid #003366;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+#otp-send-btn:hover {
+    background-color: #f2f2f2;
+}
+
+#otp-send-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Inline feedback text under the OTP field
+   (e.g. "OTP sent to your email" / "Incorrect OTP.") */
+#otp-status {
+    display: block;
+    font-size: 12px;
+    color: #666666;
+    margin-top: 6px;
+}
+
+.otp-modal-actions,
+.reset-password-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 0 24px 20px;
+}
+
+.otp-modal-actions .btn-save,
+.reset-password-modal-actions .btn-save {
+    background-color: #003366;
+    color: #ffffff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.otp-modal-actions .btn-save:hover,
+.reset-password-modal-actions .btn-save:hover {
+    background-color: #002244;
+}
+
+.otp-modal-actions .btn-save:disabled,
+.reset-password-modal-actions .btn-save:disabled {
+    background-color: #99a9bb;
+    cursor: not-allowed;
+}
+
+.otp-modal-actions .btn-cancel,
+.reset-password-modal-actions .btn-cancel {
+    background-color: #f0f0f0;
+    color: #333333;
+    border: 1px solid #dddddd;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.otp-modal-actions .btn-cancel:hover,
+.reset-password-modal-actions .btn-cancel:hover {
+    background-color: #e2e2e2;
+}
+
+@media (max-width: 480px) {
+    .session-banner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .session-banner a {
+        width: 100%;
+        text-align: center;
+    }
+
+    #profile-modal,
+    #otp-modal,
+    #reset-password-modal {
+        width: 92%;
+    }
+}

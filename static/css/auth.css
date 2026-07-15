@@ -1,0 +1,317 @@
+/* ============================================================
+   AUTH PAGES (login.html, register.html)
+   Same color system as style.css/admin.css/student.css:
+   navy #003366, accent #0059b3, light bg #f2f2f2, card #ffffff
+============================================================ */
+
+#auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e6f0ff;
+    padding: 40px 20px;
+}
+
+#auth-card {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 420px;
+    padding: 40px 35px;
+}
+
+/* Wider card for register - has more fields */
+#auth-card.wide {
+    max-width: 480px;
+}
+
+#auth-logo {
+    display: block;
+    text-align: center;
+    color: #003366;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-bottom: 5px;
+}
+
+#auth-card h1 {
+    text-align: center;
+    font-size: 22px;
+    color: #003366;
+    margin-bottom: 8px;
+}
+
+#auth-subtext {
+    text-align: center;
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 25px;
+}
+
+/* ============ FORM GROUP ============ */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #003366;
+    margin-bottom: 6px;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper .input-icon {
+    position: absolute;
+    left: 14px;
+    color: #999999;
+    font-size: 14px;
+}
+
+.input-wrapper input,
+.input-wrapper select {
+    width: 100%;
+    padding: 12px 14px 12px 40px;
+    border: 1px solid #dddddd;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    color: #333333;
+}
+
+.input-wrapper input:focus,
+.input-wrapper select:focus {
+    outline: none;
+    border-color: #0059b3;
+}
+
+.input-wrapper .toggle-password {
+    position: absolute;
+    right: 14px;
+    color: #999999;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Select needs extra right padding for the arrow */
+.input-wrapper select {
+    padding-right: 34px;
+    appearance: none;
+    background-color: #ffffff;
+}
+
+.input-wrapper .select-arrow {
+    position: absolute;
+    right: 14px;
+    color: #999999;
+    font-size: 12px;
+    pointer-events: none;
+}
+
+/* ============ PROFILE PHOTO (register only) ============ */
+#photo-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+#photo-wrapper {
+    position: relative;
+    width: 90px;
+    height: 90px;
+}
+
+#photo-preview {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #dddddd;
+}
+
+#photo-upload-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #003366;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
+    border: 2px solid #ffffff;
+}
+
+#photo-upload-label {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #666666;
+}
+
+/* ============ ROLE SELECT (register only) ============ */
+.role-group {
+    margin-bottom: 20px;
+}
+
+.role-group > label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #003366;
+    margin-bottom: 8px;
+}
+
+#role-options {
+    display: flex;
+    gap: 12px;
+}
+
+.role-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #dddddd;
+    border-radius: 6px;
+    padding: 14px 10px;
+    font-size: 13px;
+    color: #333333;
+    cursor: pointer;
+}
+
+.role-card input {
+    display: none;
+}
+
+.role-card i {
+    font-size: 18px;
+    color: #003366;
+}
+
+.role-card:has(input:checked) {
+    border-color: #0059b3;
+    background-color: #e6f0ff;
+}
+
+/* ============ PASSWORD STRENGTH (register only) ============ */
+#strength-wrapper {
+    margin-top: 8px;
+}
+
+#strength-track {
+    height: 5px;
+    border-radius: 3px;
+    background-color: #eeeeee;
+    overflow: hidden;
+}
+
+#strength-bar {
+    height: 100%;
+    width: 0%;
+    background-color: #d32f2f;
+    transition: width 0.2s ease, background-color 0.2s ease;
+}
+
+#strength-text {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #999999;
+}
+
+/* ============ TERMS (register only) ============ */
+#terms-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: #666666;
+    margin-bottom: 20px;
+}
+
+#terms-group input {
+    margin-top: 3px;
+}
+
+#terms-group a {
+    color: #0059b3;
+    text-decoration: none;
+}
+
+/* ============ SUBMIT BUTTON ============ */
+.submit-btn {
+    width: 100%;
+    background-color: #003366;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 13px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.submit-btn:hover {
+    background-color: #0059b3;
+}
+
+/* ============ SUCCESS MESSAGE ============ */
+.success-message {
+    display: none;
+    background-color: #e6f4ea;
+    color: #1e7e34;
+    border: 1px solid #b6e2c3;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.success-message.show {
+    display: block;
+}
+
+/* ============ FOOTER LINK ============ */
+#auth-footer-link {
+    text-align: center;
+    font-size: 14px;
+    color: #666666;
+    margin-top: 10px;
+}
+
+#auth-footer-link a {
+    color: #0059b3;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 480px) {
+    #auth-card {
+        padding: 30px 22px;
+    }
+
+    #role-options {
+        flex-direction: column;
+    }
+}

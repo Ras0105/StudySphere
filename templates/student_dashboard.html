@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Panel - University Management Portal</title>
+
+    <link rel="stylesheet" href="/static/css/student.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+</head>
+<body>
+
+    <div id="student-wrapper">
+
+        <aside id="sidebar">
+            <a href="#dashboard" id="sidebar-logo">Student Panel</a>
+
+            <ul id="sidebar-links">
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#courses">My Courses</a></li>
+                <li><a href="#attendance">Attendance</a></li>
+                <li><a href="#assignments">Assignments</a></li>
+                <li><a href="#results">Results</a></li>
+                <li><a href="#fees">Fees</a></li>
+                <li><a href="#timetable">Timetable</a></li>
+                <li><a href="/student-dashboard/profile">Profile</a></li>
+            </ul>
+
+            <a href="/logout" id="sidebar-logout">Logout</a>
+        </aside>
+
+        <div id="sidebar-backdrop" data-toggle="sidebar"></div>
+
+        <div id="main-content">
+
+            <div id="topbar">
+                <button id="menu-toggle" data-toggle="sidebar">☰</button>
+                <h1>Dashboard</h1>
+                <div id="topbar-icons">
+                    <button class="icon-btn">⚙</button>
+
+                    <button class="icon-btn">
+                        🔔
+                        <span class="icon-badge">2</span>
+                    </button>
+
+                    <button class="icon-btn">
+                        ✉
+                        <span class="icon-badge">4</span>
+                    </button>
+
+                    <button id="avatar-btn" data-toggle="profile-dropdown">
+                        <img class="avatar-img" src="/static/uploads/{{ user.profile_image }}" alt="Profile Photo">
+                    </button>
+                    <div id="profile-dropdown">
+                        <a href="#" data-toggle="profile-modal">Profile</a>
+                        <a href="#settings">Settings</a>
+                        <a href="#change-password" data-toggle="otp-modal">Change Password</a>
+                        <a href="/logout" class="danger">Logout</a>
+                    </div>
+                </div>
+            </div>
+
+            <section id="dashboard" class="student-section">
+                <h2>Dashboard Overview</h2>
+
+                <div id="dashboard-stats">
+                    <div class="student-card">
+                        <h3>6</h3>
+                        <p>Enrolled Courses</p>
+                    </div>
+                    <div class="student-card">
+                        <h3>92%</h3>
+                        <p>Attendance</p>
+                    </div>
+                    <div class="student-card">
+                        <h3>3</h3>
+                        <p>Pending Assignments</p>
+                    </div>
+                    <div class="student-card">
+                        <h3>₹0</h3>
+                        <p>Fees Due</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="courses" class="student-section">
+                <h2>My Courses</h2>
+                <div class="student-card">
+                    <p>List of enrolled courses, instructors, and syllabus go here.</p>
+                </div>
+            </section>
+
+            <section id="attendance" class="student-section">
+                <h2>Attendance</h2>
+                <div class="student-card">
+                    <p>Subject-wise attendance percentage and history go here.</p>
+                </div>
+            </section>
+
+            <section id="assignments" class="student-section">
+                <h2>Assignments</h2>
+                <div class="student-card">
+                    <p>Pending and submitted assignments, due dates go here.</p>
+                </div>
+            </section>
+
+            <section id="results" class="student-section">
+                <h2>Results</h2>
+                <div class="student-card">
+                    <p>Semester-wise grades and exam results go here.</p>
+                </div>
+            </section>
+
+            <section id="fees" class="student-section">
+                <h2>Fees</h2>
+                <div class="student-card">
+                    <p>Fee status, payment history, and dues go here.</p>
+                </div>
+            </section>
+
+            <section id="timetable" class="student-section">
+                <h2>Timetable</h2>
+                <div class="student-card">
+                    <p>Weekly class schedule and exam timetable go here.</p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- ================= PROFILE MODAL ================= -->
+    <div id="profile-modal-backdrop" data-toggle="profile-modal"></div>
+
+    <div id="profile-modal">
+        <div id="profile-modal-header">
+            <h2>👤 My Profile</h2>
+            <button type="button" class="modal-close" data-toggle="profile-modal">&times;</button>
+        </div>
+        {% if error %}
+            <div class="error-message">{{ error }}</div>
+        {% endif %}
+        {% if success %}
+            <div class="success-message show">{{ success }}</div>
+        {% endif %}
+        <form id="profile-modal-form" action="/change-details" method="POST" enctype="multipart/form-data">
+
+            <div id="modal-photo-group">
+                <div id="modal-photo-wrapper">
+                    <img id="modal-photo-preview" src="/static/uploads/{{ user.profile_image }}" alt="Profile Photo">
+                    <label for="modal-photo-input" id="modal-photo-upload-btn">📷</label>
+                    <input type="file" id="modal-photo-input" name="profile_image" accept="image/*" style="display:none;">
+                </div>
+                <h3>{{ user.full_name }}</h3>
+                <p>Student</p>
+            </div>
+
+            <div class="form-group">
+                <label for="modal_full_name">Full Name</label>
+                <input type="text" id="modal_full_name" name="full_name" value="{{ user.full_name }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="modal_email">Email Address</label>
+                <input type="email" id="modal_email" name="email" value="{{ user.email }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="modal_mobile">Mobile</label>
+                <input type="tel" id="modal_mobile" name="mobile" value="{{ user.mobile }}" maxlength="10" pattern="[0-9]{10}" title="Enter a 10-digit mobile number" required>
+            </div>
+
+            <div class="profile-modal-actions">
+                <button type="submit" class="btn-save">Save Changes</button>
+                <button type="button" class="btn-cancel" data-toggle="profile-modal">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="toast">Profile updated successfully!</div>
+<!-- ================= OTP MODAL (Step 1: verify identity) ================= -->
+<div id="otp-modal-backdrop" data-toggle="otp-modal"></div>
+
+<div id="otp-modal">
+    <div id="otp-modal-header">
+        <h2>Verify OTP</h2>
+        <button type="button" class="modal-close" data-toggle="otp-modal">&times;</button>
+    </div>
+
+    <div id="otp-modal-form">
+        <div class="form-group">
+            <button type="button" id="otp-send-btn">Send OTP to Email</button>
+        </div>
+
+        <div class="form-group">
+            <label for="otp-input">Enter OTP</label>
+            <input type="text" id="otp-input" maxlength="6" placeholder="6-digit code">
+            <span id="otp-status"></span>
+        </div>
+
+        <div class="otp-modal-actions">
+            <button type="button" class="btn-save" id="otp-verify-btn">Verify OTP</button>
+            <button type="button" class="btn-cancel" data-toggle="otp-modal">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- ================= RESET PASSWORD MODAL (Step 2: set new password) ================= -->
+<div id="reset-password-modal-backdrop" data-toggle="reset-password-modal"></div>
+
+<div id="reset-password-modal">
+    <div id="reset-password-modal-header">
+        <h2>Set New Password</h2>
+        <button type="button" class="modal-close" data-toggle="reset-password-modal">&times;</button>
+    </div>
+
+    {% if error %}
+        <div class="error-message">{{ error }}</div>
+    {% endif %}
+    {% if success %}
+        <div class="success-message show">{{ success }}</div>
+    {% endif %}
+
+    <form id="reset-password-modal-form" action="/change-password" method="POST">
+        <div class="form-group">
+            <label for="reset_new_password">New Password</label>
+            <input type="password" id="reset_new_password" name="new_password" required minlength="6">
+        </div>
+
+        <div class="form-group">
+            <label for="reset_confirm_password">Confirm Password</label>
+            <input type="password" id="reset_confirm_password" name="confirm_password" required minlength="6">
+        </div>
+
+        <div class="reset-password-modal-actions">
+            <button type="submit" class="btn-save">Save Changes</button>
+            <button type="button" class="btn-cancel" data-toggle="reset-password-modal">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<div id="password-toast">Password updated successfully!</div>
+
+    <script src="/static/js/script.js"></script>
+    <script src="/static/js/student.js"></script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Panel - University Management Portal</title>
+
+    <link rel="stylesheet" href="/static/css/student.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+</head>
+<body>
+
+    <div id="student-wrapper">
+
+        <aside id="sidebar">
+            <a href="#dashboard" id="sidebar-logo">Student Panel</a>
+
+            <ul id="sidebar-links">
+                <li><a href="/student-dashboard#dashboard">Dashboard</a></li>
+                <li><a href="/student-dashboard#courses">My Courses</a></li>
+                <li><a href="/student-dashboard#attendance">Attendance</a></li>
+                <li><a href="/student-dashboard#assignments">Assignments</a></li>
+                <li><a href="/student-dashboard#results">Results</a></li>
+                <li><a href="/student-dashboard#fees">Fees</a></li>
+                <li><a href="/student-dashboard#timetable">Timetable</a></li>
+                <li><a href="/student-dashboard/profile">Profile</a></li>
+            </ul>
+
+            <a href="/logout" id="sidebar-logout">Logout</a>
+        </aside>
+
+        <div id="sidebar-backdrop" data-toggle="sidebar"></div>
+
+        <div id="main-content">
+
+            <div id="topbar">
+                <button id="menu-toggle" data-toggle="sidebar">☰</button>
+                <h1>Dashboard</h1>
+                <div id="topbar-icons">
+                    <button class="icon-btn">⚙</button>
+
+                    <button class="icon-btn">
+                        🔔
+                        <span class="icon-badge">2</span>
+                    </button>
+
+                    <button class="icon-btn">
+                        ✉
+                        <span class="icon-badge">4</span>
+                    </button>
+
+                    <button id="avatar-btn" data-toggle="profile-dropdown">S</button>
+
+                    <div id="profile-dropdown">
+                        <a href="#" data-toggle="profile-modal">Profile</a>
+                        <a href="#settings">Settings</a>
+                        <a href="#change-password">Change Password</a>
+                        <a href="/logout" class="danger">Logout</a>
+                    </div>
+                </div>
+            </div>
+
+    <!-- ================= PROFILE MODAL ================= -->
+        <div id="profile-modal-header">
+            <h2>👤 My Profile</h2>
+        </div>
+        {% if error %}
+            <div class="error-message">{{ error }}</div>
+        {% endif %}
+        {% if success %}
+            <div class="success-message show">{{ success }}</div>
+        {% endif %}
+
+        <form id="profile-modal-form" action="/change-details" method="POST" enctype="multipart/form-data">
+
+            <div id="modal-photo-group">
+                <div id="modal-photo-wrapper">
+                    <img id="modal-photo-preview" src="/static/uploads/{{ user.profile_image }}" alt="Profile Photo">
+                    <label for="modal-photo-input" id="modal-photo-upload-btn">📷</label>
+                    <input type="file" id="modal-photo-input" name="profile_image" accept="image/*" style="display:none;">
+                </div>
+                <h3>{{ user.full_name }}</h3>
+                <p>Student</p>
+            </div>
+
+            <div class="form-group">
+                <label for="modal_full_name">Full Name</label>
+                <input type="text" id="modal_full_name" name="full_name" value="{{ user.full_name }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="modal_email">Email Address</label>
+                <input type="email" id="modal_email" name="email" value="{{ user.email }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="modal_mobile">Mobile</label>
+                <input type="tel" id="modal_mobile" name="mobile" value="{{ user.mobile }}" maxlength="10" pattern="[0-9]{10}" title="Enter a 10-digit mobile number" required>
+            </div>
+
+            <div class="profile-modal-actions">
+                <button type="submit" class="btn-save">Save Changes</button>
+                <button type="button" onclick="window.location.href='/student-dashboard'" class="btn-cancel">Cancel</button>
+            </div>
+        </form>
+
+    <div id="toast">Profile updated successfully!</div>
+
+    <!-- ================= password MODAL ================= -->
+    <div id="password-modal-backdrop" data-toggle="password-modal"></div>
+
+    <div id="password-modal">
+        <div id="password-modal-header">
+            <h2>Change Password</h2>
+            <button type="button" class="modal-close" data-toggle="password-modal">&times;</button>
+        </div>
+
+        <form id="password-modal-form" action="/change-password" method="POST" enctype="multipart/form-data">
+
+            <div class="form-group">
+                <label for="password_new">New Password</label>
+                <input type="password" id="password_new" name="new_password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password_confirm">Confirm Password</label>
+                <input type="password" id="password_confirm" name="confirm_password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password_otp">OTP</label>
+                <input type="text" id="password_otp" name="otp" maxlength="6" title="Enter your 6 digit One Time Password" required>
+            </div>
+
+            <div class="password-modal-actions">
+                <button type="submit" class="btn-save">Save Changes</button>
+                <button type="button" class="btn-cancel" data-toggle="password-modal">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="password-toast">password updated successfully!</div>
+
+    <script src="/static/js/script.js"></script>
+    <script src="/static/js/admin.js"></script>
+</body>
+</html>

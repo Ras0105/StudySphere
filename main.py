@@ -627,6 +627,11 @@ def change_password_dashboard(
 
 
 
+# =========================================================
+#  CHANGE PASSWORD — via login page, not logged in user
+#  for any regestered user
+# =========================================================
+
 @app.get("/login/forgot-password")
 def forgot_password_page(
     req:Request

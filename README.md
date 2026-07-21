@@ -25,7 +25,7 @@ cd <repo-folder-name>
 
 ## 3. Install dependencies
 
-This creates a virtual environment (`envi`) and installs everything listed in `requirement.txt` automatically.
+This creates a virtual environment (`envi`) and installs everything listed in `requirements.txt` automatically.
 
 **Windows:**
 ```
@@ -41,7 +41,26 @@ chmod +x setup_env.sh
 
 Wait for it to finish — it will print a list of installed packages at the end.
 
-## 4. Activate the environment (for future sessions)
+## 4. Set up your .env file
+
+The app needs some private config values (database connection, email credentials, etc.) that aren't stored in the repo for security reasons.
+
+Run this to generate your own local `.env` file:
+
+```
+python generate_env.py
+```
+
+It will ask you for a few values — press **Enter** on any of them to leave a placeholder you can fill in later by hand. It will also auto-generate a secure `SECRET_KEY` for you.
+
+Alternatively, you can copy `.env.example` to `.env` manually and fill in the values yourself:
+
+```
+cp .env.example .env
+```
+(On Windows PowerShell: `copy .env.example .env`)
+
+## 5. Activate the environment (for future sessions)
 
 Once setup has run the first time, you don't need to run the script again. Next time you open the project, just activate the existing environment:
 
@@ -57,7 +76,7 @@ source envi/bin/activate
 
 You'll know it worked because your terminal prompt will show `(envi)` at the start.
 
-## 5. Run the app
+## 6. Run the app
 
 ```
 uvicorn main:app --reload
@@ -65,8 +84,11 @@ uvicorn main:app --reload
 
 Then open the URL shown in the terminal (usually `http://127.0.0.1:8000`).
 
+> If a feature fails (e.g. database or email doesn't work), check that you replaced the placeholder values in `.env` with real ones — placeholders let the app start, but won't actually connect to anything.
+
 ## Troubleshooting
 
 - **"python is not recognized"** (Windows) → Python wasn't added to PATH during install. Reinstall Python and check that box, or use the full path to `python.exe`.
 - **"Permission denied" running setup_env.sh** (Mac/Linux) → Run `chmod +x setup_env.sh` first.
+- **App starts but a feature (login, database, email) doesn't work** → Open `.env` and check you replaced the placeholder values with real ones.
 - **Still stuck?** Delete the `envi` folder and re-run the setup script.

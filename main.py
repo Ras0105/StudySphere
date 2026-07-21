@@ -500,7 +500,7 @@ def profile_page(req:Request, error: str=None, success:str=None):
     user_id = ObjectId(req.session["user_id"])
     user = collections.find_one({"_id": user_id})
     return templates.TemplateResponse(
-        name="profile.html",
+        name="profile_student.html",
         context={
             "user":user,
             "error":error,
@@ -515,7 +515,7 @@ def profile_page(req:Request, error: str=None, success:str=None):
     user_id = ObjectId(req.session["user_id"])
     user = collections.find_one({"_id": user_id})
     return templates.TemplateResponse(
-        name="profile.html",
+        name="profile_admin.html",
         context={
             "user":user,
             "error":error,
@@ -530,7 +530,7 @@ def profile_page(req:Request, error: str=None, success:str=None):
     user_id = ObjectId(req.session["user_id"])
     user = collections.find_one({"_id": user_id})
     return templates.TemplateResponse(
-        name="profile.html",
+        name="profile_teacher.html",
         context={
             "user":user,
             "error":error,

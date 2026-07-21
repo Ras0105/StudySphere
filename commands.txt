@@ -31,3 +31,7 @@ open python shell:
 
 Hard refresh
 Browsers cache CSS aggressively. Try Ctrl+Shift+R (or Cmd+Shift+R on Mac) to bypass cache.
+
+
+    <link rel="stylesheet" href="{{ url_for('static', path='css/admin.css') }}">  
+    <script src="{{ url_for('static', path='js/admin.js') }}"></script>

@@ -1,0 +1,7 @@
+# Tell GitHub's language detector (Linguist) to ignore these folders
+# when calculating the "Languages" bar on the repo page.
+# This does NOT remove or hide the files themselves — it only affects
+# how GitHub calculates language percentages.
+
+static/*      linguist-vendored
+templates/*   linguist-vendored

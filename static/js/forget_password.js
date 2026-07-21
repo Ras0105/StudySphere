@@ -20,7 +20,7 @@ emailForm.addEventListener("submit", async function (e) {
     try {
         const formData = new FormData();
         formData.append("email", emailInput.value);
-        const res = await fetch("/forgot-password", { method: "POST", body: formData });
+        const res = await fetch("/login/forgot-password", { method: "POST", body: formData });
         const data = await res.json();
 
         if (data.success) {
@@ -48,7 +48,7 @@ verifyBtn.addEventListener("click", async function () {
     try {
         const formData = new FormData();
         formData.append("otp", otpInput.value);
-        const res = await fetch("/forgot-password/verify-otp", { method: "POST", body: formData });
+        const res = await fetch("/login/forgot-password/verify-otp", { method: "POST", body: formData });
         const data = await res.json();
 
         if (data.success) {

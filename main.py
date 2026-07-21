@@ -593,33 +593,41 @@ def verify_password_otp(req: Request, otp: str = Form(...)):
     return JSONResponse({"success": True, "message": "OTP verified."})
    
 
-@app.post("/forgot-password")
-def forgot_password(req: Request, email: str = Form(...)):
-    email = email.strip().lower()
-    user = collections.find_one({"email": email})
+@app.post("/change-password")
+def change_password_dashboard(
+    req: Request,
+    new_password: str = Form(...),
+    confirm_password: str = Form(...)
+):
+    if "user_id" not in req.session:
+        return RedirectResponse("/login?error=Session Expired", status_code=303)
+
+    user = collections.find_one({"_id": ObjectId(req.session["user_id"])})
     if not user:
-        return JSONResponse({"error": "Email Not Registered"}, status_code=401)
+        req.session.clear()
+        return RedirectResponse("/login?error=Session Expired", status_code=303)
 
-    req.session.clear()   # <-- purana kuch bhi (login session ya stale reset data) hata do
+    if not req.session.get("password_otp_verified"):
+        return redirect_to_dashboard(req.session["role"], error="Please verify OTP before changing password")
 
-    otp = random.randint(100000, 999999)
-    print(otp)  # dev-only
+    if new_password != confirm_password:
+        return redirect_to_dashboard(req.session["role"], error="Passwords do not match")
 
-    req.session["reset_email"] = email
-    req.session["reset_otp"] = str(otp)
-    req.session["reset_otp_expiry"] = (datetime.now() + timedelta(minutes=2)).isoformat()
-    req.session["reset_otp_verified"] = False
+    hashed = pwd_context.hash(new_password)
+    collections.update_one({"_id": user["_id"]}, {"$set": {"password": hashed}})
 
-    try:
-        send_otp_email(email, otp)
-    except Exception as e:
-        print(f"[OTP EMAIL ERROR] {e}")
-        return JSONResponse({"error": "Failed to send OTP. Try again."}, status_code=500)
+    req.session.pop("password_otp", None)
+    req.session.pop("password_otp_expiry", None)
+    req.session.pop("password_otp_verified", None)
+    req.session.clear()
+    return RedirectResponse(
+        url="/login?success=Password Updated Successfully",
+        status_code=303
+    )
 
-    return JSONResponse({"success": True, "message": "OTP sent to your email"})
 
 
-@app.get("/login//forgot-password")
+@app.get("/login/forgot-password")
 def forgot_password_page(
     req:Request
 ):
@@ -634,6 +642,8 @@ def forgot_password(req: Request, email: str = Form(...)):
     user = collections.find_one({"email": email})
     if not user:
         return JSONResponse({"error": "Email Not Registered"}, status_code=401)
+
+    req.session.clear()   # purana kuch bhi (login session ya stale reset data) hata do
 
     otp = random.randint(100000, 999999)
     print(otp)  # dev-only
@@ -670,7 +680,7 @@ def verify_reset_otp(req: Request, otp: str = Form(...)):
         return JSONResponse({"error": "Incorrect OTP."}, status_code=400)
 
     req.session["reset_otp_verified"] = True
-    return JSONResponse({"success": True, "message": "OTP verified.", "redirect": "/forgot-password/reset"})
+    return JSONResponse({"success": True, "message": "OTP verified.", "redirect": "/login/forgot-password/reset"})
 
 
 @app.get("/login/forgot-password/reset")

@@ -619,7 +619,7 @@ def forgot_password(req: Request, email: str = Form(...)):
     return JSONResponse({"success": True, "message": "OTP sent to your email"})
 
 
-@app.get("/forgot-password")
+@app.get("/login//forgot-password")
 def forgot_password_page(
     req:Request
 ):
@@ -628,7 +628,7 @@ def forgot_password_page(
         request=req
     )
 
-@app.post("/forgot-password")
+@app.post("/login/forgot-password")
 def forgot_password(req: Request, email: str = Form(...)):
     email = email.strip().lower()
     user = collections.find_one({"email": email})
@@ -652,7 +652,7 @@ def forgot_password(req: Request, email: str = Form(...)):
     return JSONResponse({"success": True, "message": "OTP sent to your email"})
 
 
-@app.post("/forgot-password/verify-otp")
+@app.post("/login/forgot-password/verify-otp")
 def verify_reset_otp(req: Request, otp: str = Form(...)):
     stored_email = req.session.get("reset_email")
     stored_otp = req.session.get("reset_otp")
@@ -673,10 +673,10 @@ def verify_reset_otp(req: Request, otp: str = Form(...)):
     return JSONResponse({"success": True, "message": "OTP verified.", "redirect": "/forgot-password/reset"})
 
 
-@app.get("/forgot-password/reset")
+@app.get("/login/forgot-password/reset")
 def reset_password_page(req: Request, error: str = None, success: str = None):
     if not req.session.get("reset_otp_verified"):
-        return RedirectResponse("/forgot-password?error=Please verify OTP first", status_code=303)
+        return RedirectResponse("/login/forgot-password?error=Please verify OTP first", status_code=303)
     return templates.TemplateResponse(
         name="reset_password.html",
         context={"request": req, "error": error, "success": success, "reset_email": req.session.get("reset_email")},
@@ -684,7 +684,7 @@ def reset_password_page(req: Request, error: str = None, success: str = None):
     )
 
 
-@app.post("/forgot-password/change-password")
+@app.post("/login/forgot-password/change-password")
 def change_password_forgot(
     req: Request,
     new_password: str = Form(...),
@@ -692,7 +692,7 @@ def change_password_forgot(
 ):
     email = req.session.get("reset_email")
     if not email or not req.session.get("reset_otp_verified"):
-        return RedirectResponse("/forgot-password?error=Session Expired", status_code=303)
+        return RedirectResponse("/login/forgot-password?error=Session Expired", status_code=303)
 
     if new_password != confirm_password:
         return templates.TemplateResponse(

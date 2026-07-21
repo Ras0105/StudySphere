@@ -23,6 +23,7 @@ uvicorn main:app --reload
 
 pip freeze > requirements.txt
 
+pip install -r requirements.txt
 
 open python shell:
     import secrets

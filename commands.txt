@@ -27,3 +27,7 @@ pip freeze > requirements.txt
 open python shell:
     import secrets
     print(secrets.token_hex(32))
+
+
+Hard refresh
+Browsers cache CSS aggressively. Try Ctrl+Shift+R (or Cmd+Shift+R on Mac) to bypass cache.

@@ -55,7 +55,7 @@
                     <div id="profile-dropdown">
                         <a href="#" data-toggle="profile-modal">Profile</a>
                         <a href="#settings">Settings</a>
-                        <a href="#change-password">Change Password</a>
+                        <a href="#change-password"data-toggle="password-modal">Change Password</a>
                         <a href="/logout" class="danger">Logout</a>
                     </div>
                 </div>
@@ -105,44 +105,71 @@
             </div>
         </form>
 
-    <div id="toast">Profile updated successfully!</div>
+<div id="toast">Profile updated successfully!</div>
 
-    <!-- ================= password MODAL ================= -->
-    <div id="password-modal-backdrop" data-toggle="password-modal"></div>
+    <!-- ================= OTP MODAL (Step 1: verify identity) ================= -->
+<div id="otp-modal-backdrop" data-toggle="otp-modal"></div>
 
-    <div id="password-modal">
-        <div id="password-modal-header">
-            <h2>Change Password</h2>
-            <button type="button" class="modal-close" data-toggle="password-modal">&times;</button>
-        </div>
-
-        <form id="password-modal-form" action="/change-password" method="POST" enctype="multipart/form-data">
-
-            <div class="form-group">
-                <label for="password_new">New Password</label>
-                <input type="password" id="password_new" name="new_password" required>
-            </div>
-
-            <div class="form-group">
-                <label for="password_confirm">Confirm Password</label>
-                <input type="password" id="password_confirm" name="confirm_password" required>
-            </div>
-
-            <div class="form-group">
-                <label for="password_otp">OTP</label>
-                <input type="text" id="password_otp" name="otp" maxlength="6" title="Enter your 6 digit One Time Password" required>
-            </div>
-
-            <div class="password-modal-actions">
-                <button type="submit" class="btn-save">Save Changes</button>
-                <button type="button" class="btn-cancel" data-toggle="password-modal">Cancel</button>
-            </div>
-        </form>
+<div id="otp-modal">
+    <div id="otp-modal-header">
+        <h2>Verify OTP</h2>
+        <button type="button" class="modal-close" data-toggle="otp-modal">&times;</button>
     </div>
 
-    <div id="password-toast">password updated successfully!</div>
+    <div id="otp-modal-form">
+        <div class="form-group">
+            <button type="button" id="otp-send-btn">Send OTP to Email</button>
+        </div>
+
+        <div class="form-group">
+            <label for="otp-input">Enter OTP</label>
+            <input type="text" id="otp-input" maxlength="6" placeholder="6-digit code">
+            <span id="otp-status"></span>
+        </div>
+
+        <div class="otp-modal-actions">
+            <button type="button" class="btn-save" id="otp-verify-btn">Verify OTP</button>
+            <button type="button" class="btn-cancel" data-toggle="otp-modal">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- ================= RESET PASSWORD MODAL (Step 2: set new password) ================= -->
+<div id="reset-password-modal-backdrop" data-toggle="reset-password-modal"></div>
+
+<div id="reset-password-modal">
+    <div id="reset-password-modal-header">
+        <h2>Set New Password</h2>
+        <button type="button" class="modal-close" data-toggle="reset-password-modal">&times;</button>
+    </div>
+
+    {% if error %}
+        <div class="error-message">{{ error }}</div>
+    {% endif %}
+    {% if success %}
+        <div class="success-message show">{{ success }}</div>
+    {% endif %}
+
+    <form id="reset-password-modal-form" action="/change-password" method="POST">
+        <div class="form-group">
+            <label for="reset_new_password">New Password</label>
+            <input type="password" id="reset_new_password" name="new_password" required minlength="6">
+        </div>
+
+        <div class="form-group">
+            <label for="reset_confirm_password">Confirm Password</label>
+            <input type="password" id="reset_confirm_password" name="confirm_password" required minlength="6">
+        </div>
+
+        <div class="reset-password-modal-actions">
+            <button type="submit" class="btn-save">Save Changes</button>
+            <button type="button" class="btn-cancel" data-toggle="reset-password-modal">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<!-- <div id="password-toast">Password updated successfully!</div> -->
 
     <script src="/static/js/script.js"></script>
-    <script src="/static/js/admin.js"></script>
 </body>
 </html>

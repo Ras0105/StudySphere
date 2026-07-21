@@ -238,6 +238,7 @@ def login(
     req.session["user_id"]=str(id)
     req.session["role"]=role
     return redirect_to_dashboard(role)
+
 # -------Admin-Dashboard-------------------------------------------------
 @app.get("/admin-dashboard")
 def admin_page(
@@ -539,26 +540,6 @@ def profile_page(req:Request, error: str=None, success:str=None):
     )
 
 
-
-
-# @app.get("/admin-dashboard/change-password")
-# def forgot_password_page(req: Request, error:str=None,success:str=None):
-#     user=collections.find_one(req.session["user_id"])
-#     if not user:
-#         return templates.TemplateResponse(
-#             request=req,
-#             name="forgot_password.html",
-#             context={"request":req,"error": error,"success": success}
-#         )
-        
-#     else:
-#         return templates.TemplateResponse(
-#                     request=req,
-#                     name="forgot_password.html",
-#                     context={"request":req,"error": error,"success": success}
-#                 )
-
-
     
 # =========================================================
 #  CHANGE PASSWORD — logged-in user, via dashboard OTP modal
@@ -612,34 +593,118 @@ def verify_password_otp(req: Request, otp: str = Form(...)):
     return JSONResponse({"success": True, "message": "OTP verified."})
    
 
-@app.post("/change-password")
-def change_password_dashboard(
+@app.post("/forgot-password")
+def forgot_password(req: Request, email: str = Form(...)):
+    email = email.strip().lower()
+    user = collections.find_one({"email": email})
+    if not user:
+        return JSONResponse({"error": "Email Not Registered"}, status_code=401)
+
+    req.session.clear()   # <-- purana kuch bhi (login session ya stale reset data) hata do
+
+    otp = random.randint(100000, 999999)
+    print(otp)  # dev-only
+
+    req.session["reset_email"] = email
+    req.session["reset_otp"] = str(otp)
+    req.session["reset_otp_expiry"] = (datetime.now() + timedelta(minutes=2)).isoformat()
+    req.session["reset_otp_verified"] = False
+
+    try:
+        send_otp_email(email, otp)
+    except Exception as e:
+        print(f"[OTP EMAIL ERROR] {e}")
+        return JSONResponse({"error": "Failed to send OTP. Try again."}, status_code=500)
+
+    return JSONResponse({"success": True, "message": "OTP sent to your email"})
+
+
+@app.get("/forgot-password")
+def forgot_password_page(
+    req:Request
+):
+    return templates.TemplateResponse(
+        name="forgot_password.html",
+        request=req
+    )
+
+@app.post("/forgot-password")
+def forgot_password(req: Request, email: str = Form(...)):
+    email = email.strip().lower()
+    user = collections.find_one({"email": email})
+    if not user:
+        return JSONResponse({"error": "Email Not Registered"}, status_code=401)
+
+    otp = random.randint(100000, 999999)
+    print(otp)  # dev-only
+
+    req.session["reset_email"] = email
+    req.session["reset_otp"] = str(otp)
+    req.session["reset_otp_expiry"] = (datetime.now() + timedelta(minutes=2)).isoformat()
+    req.session["reset_otp_verified"] = False
+
+    try:
+        send_otp_email(email, otp)
+    except Exception as e:
+        print(f"[OTP EMAIL ERROR] {e}")
+        return JSONResponse({"error": "Failed to send OTP. Try again."}, status_code=500)
+
+    return JSONResponse({"success": True, "message": "OTP sent to your email"})
+
+
+@app.post("/forgot-password/verify-otp")
+def verify_reset_otp(req: Request, otp: str = Form(...)):
+    stored_email = req.session.get("reset_email")
+    stored_otp = req.session.get("reset_otp")
+    expiry_str = req.session.get("reset_otp_expiry")
+
+    if not stored_email or not stored_otp or not expiry_str:
+        return JSONResponse({"error": "No OTP requested. Please request one first."}, status_code=400)
+
+    if datetime.now() > datetime.fromisoformat(expiry_str):
+        req.session.pop("reset_otp", None)
+        req.session.pop("reset_otp_expiry", None)
+        return JSONResponse({"error": "OTP expired. Please request a new one."}, status_code=400)
+
+    if not secrets.compare_digest(otp, stored_otp):
+        return JSONResponse({"error": "Incorrect OTP."}, status_code=400)
+
+    req.session["reset_otp_verified"] = True
+    return JSONResponse({"success": True, "message": "OTP verified.", "redirect": "/forgot-password/reset"})
+
+
+@app.get("/forgot-password/reset")
+def reset_password_page(req: Request, error: str = None, success: str = None):
+    if not req.session.get("reset_otp_verified"):
+        return RedirectResponse("/forgot-password?error=Please verify OTP first", status_code=303)
+    return templates.TemplateResponse(
+        name="reset_password.html",
+        context={"request": req, "error": error, "success": success, "reset_email": req.session.get("reset_email")},
+        request=req
+    )
+
+
+@app.post("/forgot-password/change-password")
+def change_password_forgot(
     req: Request,
     new_password: str = Form(...),
     confirm_password: str = Form(...)
 ):
-    if "user_id" not in req.session:
-        return RedirectResponse("/login?error=Session Expired", status_code=303)
-
-    user = collections.find_one({"_id": ObjectId(req.session["user_id"])})
-    if not user:
-        req.session.clear()
-        return RedirectResponse("/login?error=Session Expired", status_code=303)
-
-    if not req.session.get("password_otp_verified"):
-        return redirect_to_dashboard(req.session["role"], error="Please verify OTP before changing password")
+    email = req.session.get("reset_email")
+    if not email or not req.session.get("reset_otp_verified"):
+        return RedirectResponse("/forgot-password?error=Session Expired", status_code=303)
 
     if new_password != confirm_password:
-        return redirect_to_dashboard(req.session["role"], error="Passwords do not match")
+        return templates.TemplateResponse(
+            name="reset_password.html",
+            context={"request": req, "error": "Passwords do not match"},
+            request=req
+        )
 
     hashed = pwd_context.hash(new_password)
-    collections.update_one({"_id": user["_id"]}, {"$set": {"password": hashed}})
+    collections.update_one({"email": email}, {"$set": {"password": hashed}})
 
-    req.session.pop("password_otp", None)
-    req.session.pop("password_otp_expiry", None)
-    req.session.pop("password_otp_verified", None)
-    req.session.clear()
-    return RedirectResponse(
-        url="/login?success=Password Updated Successfully",
-        status_code=303
-    )
+    for k in ("reset_email", "reset_otp", "reset_otp_expiry", "reset_otp_verified"):
+        req.session.pop(k, None)
+
+    return RedirectResponse(url="/login?success=Password Updated Successfully", status_code=303)
